@@ -1,1 +1,1 @@
-![Admin Panel](/home/ferasnawafleh/projects/cookie-stand-admin/CookieStandAdmin.PNG)
+![Admin Panel](https://github.com/feras98nawafleh/cookie-stand-admin/blob/main/CookieStandAdmin.PNG)
