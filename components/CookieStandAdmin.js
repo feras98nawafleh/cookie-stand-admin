@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Header from '../components/Header';
-import Main from '../components/Main';
+import Home from '../components/Home';
 
 const Admin = () => {
   return (
@@ -10,7 +10,7 @@ const Admin = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <Main />
+      <Home />
     </>
   );
 };
