@@ -38,14 +38,15 @@ const Main = (props) => {
       hourlySales: 15,
       owner: 1
     };
-    axios
-      .post(postsEndPoint, branchInfo, config)
-      .then((res) => {
-        console.log('RESPONSE RECEIVED: ', res);
-      })
-      .catch((err) => {
-        console.log('AXIOS ERROR: ', err);
-      });
+    // axios
+    //   .post(postsEndPoint, branchInfo, config)
+    //   .then((res) => {
+    //     console.log('RESPONSE RECEIVED: ', res);
+    //   })
+    //   .catch((err) => {
+    //     console.log('AXIOS ERROR: ', err);
+    //   });
+    setBranches((branches) => [...branches, branchInfo]);
   };
   return (
     <>
