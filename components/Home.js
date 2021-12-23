@@ -3,19 +3,11 @@ import Main from '../components/Main'
 import LoginForm from '../components/LoginForm';
 import axios from 'axios';
 
-const baseUrl = 'http://127.0.0.1:8000/';
+const baseUrl = 'https://feras-cookie-stand-api.herokuapp.com/'
 const tokenUrl = baseUrl + 'api/token/';
 
 const Home = () => {
   const [token, setToken] = useState('');
-
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-
-  // axios.get(postsEndPoint, config).then((res) => {
-  //   responses = res.data;
-  // });
 
   const submitHandler = async (e, credintials) => {
     e.preventDefault();
@@ -28,3 +20,4 @@ const Home = () => {
   return <Main token={token}/>;
 };
 export default Home;
+
