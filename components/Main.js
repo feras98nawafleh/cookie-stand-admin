@@ -1,27 +1,51 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Report from '../components/ReportTable';
 import axios from 'axios';
 
-const baseUrl = 'http://127.0.0.1:8000/';
-const postsEndPoint = baseUrl + 'api/v1/posts';
-const posts = baseUrl + 'api/v1/posts/';
+const baseUrl = 'https://feras-cookie-stand-api.herokuapp.com/';
+const postsEndPoint = baseUrl + 'api/v1/cookies';
 
 const Main = (props) => {
-  const [branch, setBranch] = useState('');
   const [branches, setBranches] = useState([])
-
   const config = {
     headers: { Authorization: `Bearer ${props.token}` },
   };
 
-  axios.get(postsEndPoint, config).then((res) => {
-    setBranches(res.data);
-  });
+  useEffect(function effectFunction() {
+    async function fetchBranches() {
+      const response = await axios.get(postsEndPoint, config);
+      response.data.map((data) => {
+        console.log(data);
+        setBranches(branches => [...branches, data])
+      }
+      )}
+    fetchBranches();
+  }, []);
+
+  const deleteBranch = (id) => {
+    axios.delete(postsEndPoint + '/' + id, config);
+    alert('Branch with id ' + id + ' deleted')
+  }
+
   const formHandler = (e) => {
     e.preventDefault();
-    setBranch(e.target.city.value);
-    if(branch !== '')
-      setBranches((branches) => [...branches, branch]);
+    let branchInfo = {
+      location: e.target.city.value,
+      description: location + 'branch',
+      min: Number(e.target.min),
+      max: Number(e.target.max.value),
+      avg: Number(e.target.avg.value),
+      hourlySales: 15,
+      owner: 1
+    };
+    axios
+      .post(postsEndPoint, branchInfo, config)
+      .then((res) => {
+        console.log('RESPONSE RECEIVED: ', res);
+      })
+      .catch((err) => {
+        console.log('AXIOS ERROR: ', err);
+      });
   };
   return (
     <>
@@ -29,9 +53,6 @@ const Main = (props) => {
         onSubmit={formHandler}
         className="w-3/4 p-2 mx-auto my-5 bg-green-200 rounded-lg place-content-center py-5"
       >
-        {/* <h2 className="text-lg font-semibold text-center ">
-          Create Cookie Stand
-        </h2> */}
         <div className="grid grid-cols-3 gap-6 px-10">
           <div className="col-span-2 justify-between">
             <label className="font-bold" for="city">
@@ -69,7 +90,7 @@ const Main = (props) => {
           </div>
         </div>
       </form>
-      <Report branches={branches} />
+      <Report branches={branches} deleteBranch={deleteBranch}/>
     </>
   );
 }
